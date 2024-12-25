@@ -1,0 +1,12 @@
+.slick-slide > div {
+  @apply flex mx-2
+}
+
+.slick-prev:before,
+.slick-next:before {
+  @apply bg-sky-900 text-white rounded-full 
+}
+
+.slick-prev:before{
+  @apply mx-1
+}

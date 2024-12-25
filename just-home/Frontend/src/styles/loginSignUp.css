@@ -1,0 +1,29 @@
+@media screen and (min-width: 768px) {
+  .login-left, .login-right {
+    transition: transform 1.5s ease;
+  }
+
+  .login-right{
+    transform: translate(-50%,0%);
+  }
+
+  .login-left{
+    transform: translate(50%,0%);
+  }
+
+  .login-left.animate {
+    transform: translateX(5%);
+  }
+
+  .login-right.animate {
+    transform: translateX(0%);
+  }
+}
+
+.main-div{
+  @apply flex justify-between m-auto bg-slate-100 gap-6 max-950:gap-0 w-full max-w-screen-xl h-[800px] rounded-lg pt-4 border shadow-md
+}
+
+.gradient-btn{
+  @apply bg-gradient-to-r from-custom-blue to-custom-cyan text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:from-blue-600 hover:to-cyan-500 transition-all duration-300 mt-3
+}
