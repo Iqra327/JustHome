@@ -1,0 +1,35 @@
+# Node.js
+node_modules/            # Dependencies folder
+npm-debug.log*           # Logs from npm
+yarn-debug.log*          # Logs from Yarn
+yarn-error.log*          # Errors from Yarn
+
+# Environment Variables
+.env                     # Environment configuration file
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# Build Files
+dist/                    # Output folder for compiled code
+build/
+
+# Debug Files
+.vscode/                 # Visual Studio Code settings (optional)
+.idea/                   # IntelliJ IDEA settings
+*.swp                    # Swap files (e.g., Vim)
+*.pid                    # Process ID files
+
+# Test Coverage
+coverage/                # Test coverage reports
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+
+# OS-Specific
+.DS_Store                # macOS file
+Thumbs.db                # Windows thumbnail cache
