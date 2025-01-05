@@ -1,14 +1,23 @@
 import { useState } from 'react';
 import Button from '../../Common/Button';
-import { useForm } from 'react-hook-form';
 
 const Hero = () => {
+  const [input, setInput] = useState({
+    location: '',
+    minPrice: null,
+    maxPrice: null
+  });
 
-  const { register, handleSubmit} = useForm();
+  const getValues = (e) => {
+    const {name, value} = e.target;
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value
+    }))
+  }
 
-  const onSubmit = (data,e) =>{
-    e.preventDefault();
-    console.log(data);
+  const onSubmit = () =>{
+    console.log(input)
   }
   
   return (
@@ -24,38 +33,44 @@ const Hero = () => {
         </h1>
       </div>
       <div className='container mt-12 py-7'>
-        <form 
-          onSubmit={handleSubmit(onSubmit)} 
+        <div  
           className='flex gap-x-7 py-7 px-10 bg-slate-300 w-full max-w-5xl mx-auto justify-center text-lg rounded-md shadow-md'
         >
         <input 
           id='location' 
-          type='text' 
+          type='text'
+          name='location' 
           placeholder='Location'
+          value={input.location}
+          onChange={getValues}
           className='border rounded-md border-gray-300 text-center px-4 focus:outline-none focus:border-gray-500'
-          {...register('location')}
         />
         <input 
           id='minPrice' 
-          type='number' 
+          type='number'
+          name='minPrice' 
           min={0}
           placeholder='Min Price'
+          value={input.minPrice}
+          onChange={getValues}
           className='border rounded-md border-gray-300 text-center px-4 focus:outline-none focus:border-gray-500'
-          {...register('minPrice')}
         />
         <input 
           id='maxPrice' 
-          type='number' 
+          type='number'
+          name='maxPrice' 
           placeholder='Max Price'
+          value={input.maxPrice}
+          onChange={getValues}
           className='border rounded-md border-gray-300 text-center px-4 focus:outline-none focus:border-gray-500'
-          {...register('maxPrice')}
         />
         
         <Button 
-          text='Search' 
+          text='Search'
+          onClick={onSubmit} 
           className='border bg-sky-700 text-white'
         />
-        </form>
+        </div>
       </div>
     </div>
   )
