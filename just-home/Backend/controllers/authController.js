@@ -4,7 +4,7 @@ const { signupService, loginService } = require('../services/authService');
 const signup = async (req, res) => {
   try {
     const {username, email, password} = req.body;
-    const { status, message, data } = await signupService(username, email, password);
+    const { status, message} =await signupService(username, email, password);
     return res.status(status).json({message});
   } catch (error) {
     console.error("Error in signup controller:", error);
