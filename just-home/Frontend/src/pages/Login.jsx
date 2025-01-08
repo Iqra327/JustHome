@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../components/Common/GradientButton.jsx";
 import Icons from "../components/Common/Icons.jsx";
 import SideDiv from "../components/Common/SideDiv.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/slices/authSlice.js";
 
 const Login = () => {
 
@@ -18,6 +20,7 @@ const Login = () => {
   const [animate, setAnimate] = useState(false);
   const [customError, setCustomError] = useState('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -32,35 +35,35 @@ const Login = () => {
 
   const { errors } = formState;
 
-  const info = [
-    {
-      email: 'abc@gmail.com',
-      password: 'Qw123@ty'
-    },
-    {
-      email: 'xyz@gmail.com',
-      password: 'Ab347%Ok'
-    }
-  ]
+  // const info = [
+  //   {
+  //     email: 'abc@gmail.com',
+  //     password: 'Qw123@ty'
+  //   },
+  //   {
+  //     email: 'xyz@gmail.com',
+  //     password: 'Ab347%Ok'
+  //   }
+  // ]
 
-  const onSubmit = (data,e) => {
+  const onSubmit =async (data,e) => {
     e.preventDefault();
-    console.log(data);
     setCustomError('');
-
-    const user = info.find(
-      (detail) => detail.email === data.email && detail.password === data.password
-    );
-  
-    if (user) {
-      reset();
-      toast.success('Login Successful!');
-      setTimeout(() => {
-        navigate('/');
-      }, 1400);
-      console.log('okk i ma clear');
-    } else {
-      setCustomError('Invalid email or password');
+    try {
+      const user = dispatch(loginUser(data));
+      console.log(data);
+      if (user) {
+        reset();
+        toast.success('Login Successful!');
+        setTimeout(() => {
+          navigate('/');
+        }, 1400);
+        console.log('okk i ma clear');
+      } else {
+        setCustomError('Invalid email or password');
+      } 
+    } catch (error) {
+      console.log(error);
     }
   }
 

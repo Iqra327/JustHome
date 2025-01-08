@@ -66,7 +66,13 @@ const loginService = async (email, password) => {
     return {
       status: 200,
       message: 'Login Successful!',
-      token
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+      },
     } 
   } catch (error) {
     throw error;
