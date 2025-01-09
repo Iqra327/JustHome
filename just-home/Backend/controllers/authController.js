@@ -8,7 +8,7 @@ const signup = async (req, res) => {
     return res.status(status).json({message});
   } catch (error) {
     console.error("Error in signup controller:", error);
-    res.status(500).json({message: "Internal server error"})
+    res.status(500).json({message: "Something went wrong. Please try again later!"})
   }
 }
 
@@ -19,7 +19,7 @@ const login = async (req,res) => {
     const {status, message, token, user} = await loginService(email, password);
     return res.status(status).json({message, token, user })
   } catch (error) {
-    res.status(500).json({message: "Internal server error"})
+    res.status(500).json({message: "Something went wrong. Please try again later!"})
   }
 }
 
