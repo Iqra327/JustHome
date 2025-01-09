@@ -4,6 +4,7 @@ import contactPh from "../../../assets/imgs/contactPh.png";
 import Button from '../../Common/Button';
 import Info from './Info';
 import { toast } from 'react-toastify';
+import { contact } from '../../../../api/contactApi';
 
 const MainForm = () => {
   
@@ -13,10 +14,21 @@ const MainForm = () => {
   
   const { errors } = formState;
   
-  const onSubmit = (data) => {
-    console.log(data);
-    reset();
-    toast.success('Message sent!')
+  const onSubmit = async (data) => {
+    try {
+      const response = await contact(data);
+      toast.success(response?.data?.msg, {
+        autoClose: 2500
+      });
+      setTimeout(() => {
+        reset();
+      }, 2700)
+    } 
+    catch (error) {
+      toast.error(error.response?.data?.msg, {
+        autoClose: 2500
+      });
+    }
   }
 
   return (
@@ -44,6 +56,10 @@ const MainForm = () => {
               })}
             />
           
+            <p className="text-red-600">
+              {errors.name?.message}
+            </p>
+
             <label htmlFor='email' className='sm:text-xl mt-2 text-sky-950'>
               Email
             </label>

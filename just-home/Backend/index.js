@@ -1,5 +1,6 @@
 const express = require('express');
 const auth = require('./routes/authRoute');
+const contact = require('./routes/contactRoute');
 const connectDb = require('./utils/database');
 const cors = require('cors');
 require('dotenv').config();
@@ -15,6 +16,7 @@ app.get('/', (req, res) => {
 
 //routes
 app.use('/api/v1', auth);
+app.use('/api/v1', contact);
 
 connectDb().then(() => {
   app.listen(port, () => {
