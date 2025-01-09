@@ -12,16 +12,19 @@ import Button from "../components/Common/GradientButton.jsx";
 import Icons from "../components/Common/Icons.jsx";
 import SideDiv from "../components/Common/SideDiv.jsx";
 import { useDispatch, useSelector } from "react-redux";
+import { login } from '../../api/authApi.js';
 import { loginUser } from "../redux/slices/authSlice.js";
 
 const Login = () => {
 
   const [viewPass, setViewPass] = useState(false);
   const [animate, setAnimate] = useState(false);
-  const [customError, setCustomError] = useState('');
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const user = useSelector((state) => state.auth.token);
+  // console.log(user);
 
+  // animation
   useEffect(() => {
     const timer = setTimeout(() => {
       setAnimate(true);
@@ -35,38 +38,39 @@ const Login = () => {
 
   const { errors } = formState;
 
-  // const info = [
-  //   {
-  //     email: 'abc@gmail.com',
-  //     password: 'Qw123@ty'
-  //   },
-  //   {
-  //     email: 'xyz@gmail.com',
-  //     password: 'Ab347%Ok'
-  //   }
-  // ]
-
-  const onSubmit =async (data,e) => {
+  //onsubmit
+  const onSubmit = async (data,e) => {
     e.preventDefault();
-    setCustomError('');
+    
     try {
-      const user = dispatch(loginUser(data));
-      console.log(data);
-      if (user) {
+      console.log('wait')
+      const response = await login(data);
+
+      if (response.status === 200) {
         reset();
-        toast.success('Login Successful!');
+
+        //saving token to localStorage
+        const token = response?.data?.token;
+        localStorage.setItem('token', token);
+        // dispatch(loginUser(token));
+
+        dispatch(loginUser(response?.data?.user));
+      
+        toast.success(response?.data?.message, {
+          autoClose: 1000
+        });
+        
         setTimeout(() => {
           navigate('/');
         }, 1400);
-        console.log('okk i ma clear');
-      } else {
-        setCustomError('Invalid email or password');
       } 
     } catch (error) {
-      console.log(error);
+      toast.error(error.response?.data?.message,  {
+        autoClose: 1500
+      });
     }
   }
-
+  
   return (
     <div className="px-4">
       <p className="text-center text-lg mt-3 mb-3 tracking-wide">
@@ -146,13 +150,13 @@ const Login = () => {
               <p className="text-red-600">
                 {errors.password?.message}
               </p>
-
+            {/* 
               {
                 customError && 
                 <p className="text-red-600">
                   {customError}
                 </p>
-              }
+              } */}
               
               <Button text='Login'/>
 
@@ -168,7 +172,6 @@ const Login = () => {
           img={loginHome}
           className={`login-right ${animate ? 'animate' : ''}`}
         />
-        <ToastContainer autoClose={1000}/>
       </div>
     </div>    
   )

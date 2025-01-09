@@ -9,6 +9,7 @@ const Header = () => {
 
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const token = localStorage.getItem('token');
 
   return (
     <>    
@@ -48,19 +49,24 @@ const Header = () => {
             </NavLink> */}
           </ul>
           <div className='flex items-center cursor-pointer text-white text-19px'>
-            <NavLink 
-              to='/login' 
-              className={({isActive}) => isActive ? 'underline underline-offset-4 decoration-white decoration-2 font-bold' : ''}
-            >
-              <p>Login</p>
-            </NavLink>
-            {/* <button onClick={() => setIsOpen(true)}>
-              <CgProfile className='text-3xl max-sm:hidden'/>
-            </button>
-            <GiHamburgerMenu 
-              className='hidden max-sm:block' 
-              onClick={() => setOpen(!open)}
-            /> */}
+            {
+              !token ? 
+              <NavLink 
+                to='/login' 
+                className={({isActive}) => isActive ? 'underline underline-offset-4 decoration-white decoration-2 font-bold' : ''}
+              >
+                <p>Login</p>
+              </NavLink> :    
+              <>
+                <button onClick={() => setIsOpen(true)}>
+                  <CgProfile className='text-3xl max-sm:hidden'/>
+                </button>
+                <GiHamburgerMenu 
+                  className='hidden max-sm:block' 
+                  onClick={() => setOpen(!open)}
+                />
+              </>          
+            }
           </div>
         </div>
       </div>
@@ -90,7 +96,7 @@ const Header = () => {
             <hr className='underline'/>
             <NavLink to='/'>
               <li className='hover:underline'>
-                Sign Out
+                Logout
               </li>
             </NavLink>
           </ul>
@@ -125,12 +131,12 @@ const Header = () => {
             className={({isActive}) => isActive ? 'underline decoration-sky-950 font-bold' : ''}>
             <li>Products</li>
           </NavLink>
-          <NavLink 
+          {/* <NavLink 
             to='/dashboard' 
             className={({isActive}) => isActive ? 'underline decoration-sky-950 font-bold' : ''}
           >
             <li>Dashboard</li>
-          </NavLink>
+          </NavLink> */}
           <NavLink
             to='/contact' 
             className={({isActive}) => isActive ? 'underline decoration-sky-950 font-bold' : ''}>

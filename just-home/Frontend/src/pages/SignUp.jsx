@@ -8,11 +8,15 @@ import person from "../assets/imgs/person.png";
 import Button from "../components/Common/GradientButton.jsx";
 import Icons from "../components/Common/Icons.jsx";
 import SideDiv from "../components/Common/SideDiv.jsx";
+import { signup } from "../../api/authApi.js";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [viewPass, setViewPass] = useState(false);
   const [viewConfPass, setViewConfPass] = useState(false);
   const [animate, setAnimate] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -26,10 +30,26 @@ const SignUp = () => {
   });
   const { errors } = formState;
 
-  const onSubmit = (data, e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
     console.log(data);
-    reset();
+
+    try {
+      const response = await signup(data);
+      console.log(response)
+      toast.success(response?.data?.message, {
+        autoClose: 1000
+      });      
+
+      setTimeout(() => {
+        navigate('/login');
+      }, 1400);
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response?.data?.message, {
+        autoClose: 1200
+      });
+    }
   };
 
   return (

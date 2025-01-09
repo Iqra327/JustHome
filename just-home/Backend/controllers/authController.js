@@ -16,8 +16,8 @@ const signup = async (req, res) => {
 const login = async (req,res) => {
   try {
     const {email, password} = req.body;
-    const {status, message, token} = await loginService(email, password);
-    return res.status(status).json({message, token})
+    const {status, message, token, user} = await loginService(email, password);
+    return res.status(status).json({message, token, user })
   } catch (error) {
     res.status(500).json({message: "Internal server error"})
   }
