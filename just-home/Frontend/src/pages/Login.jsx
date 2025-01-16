@@ -5,7 +5,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { Link } from "react-router-dom";
 import "../styles/loginSignUp.css";
 import loginHome from "../assets/imgs/loginHome.png";
-import { ToastContainer, toast } from 'react-toastify';
+import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import Button from "../components/Common/GradientButton.jsx";
@@ -21,8 +21,6 @@ const Login = () => {
   const [animate, setAnimate] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const user = useSelector((state) => state.auth.token);
-  // console.log(user);
 
   // animation
   useEffect(() => {
@@ -48,13 +46,9 @@ const Login = () => {
 
       if (response.status === 200) {
         reset();
-
-        //saving token to localStorage
         const token = response?.data?.token;
-        localStorage.setItem('token', token);
-        // dispatch(loginUser(token));
-
-        dispatch(loginUser(response?.data?.user));
+        const user = response?.data?.user;
+        dispatch(loginUser({user, token}));
       
         toast.success(response?.data?.message, {
           autoClose: 1000
@@ -70,6 +64,9 @@ const Login = () => {
       });
     }
   }
+
+  const user = useSelector((state) => state.auth.user);
+  console.log(user);
   
   return (
     <div className="px-4">

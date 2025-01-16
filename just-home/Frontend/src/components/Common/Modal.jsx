@@ -2,7 +2,7 @@ import { RxCross2 } from "react-icons/rx";
 import Button from "./Button";
 import { useRef } from "react";
 
-const Modal = ({children, onClose}) => {
+const Modal = ({children, onClose, className}) => {
   const modalRef = useRef();
   
   const onBackdropClick = (e) => {
@@ -16,7 +16,7 @@ const Modal = ({children, onClose}) => {
       ref={modalRef}
       onClick={onBackdropClick} 
       className='fixed inset-0 bg-black bg-opacity-30 backdrop-blur z-20'>
-      <div className='bg-white shadow-lg rounded w-full max-w-xl mx-auto mt-56'>
+      <div className={`bg-white shadow-lg rounded w-full max-w-xl mx-auto ${className}`}>
         <Button 
           text={<RxCross2 size={35} className="text-black"/>} 
           onClick={onClose}

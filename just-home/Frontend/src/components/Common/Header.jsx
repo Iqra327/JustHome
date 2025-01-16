@@ -1,16 +1,24 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { CgProfile } from 'react-icons/cg'
 import { GiHamburgerMenu } from 'react-icons/gi'
 import logo from "../../assets/imgs/logo.png"
 import { NavLink } from 'react-router-dom'
 import { RxCross2 } from 'react-icons/rx'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser } from '../../redux/slices/authSlice'
 
 const Header = () => {
 
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const token = localStorage.getItem('token');
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
 
+  const logout = () => {
+    setIsOpen(false);
+    dispatch(logoutUser());
+  }
+  
   return (
     <>    
       <div className='py-4 px-3 z-10 w-full border-b bg-[#74b4d9]'>
@@ -74,7 +82,7 @@ const Header = () => {
       {/* on profile icon click */}
       {
         isOpen && 
-        <div className='w-36 h-44 border shadow text-center flex flex-col gap-2 text-xl pt-2 absolute right-10 top-6 bg-sky-50 rounded'>
+        <div className='w-36 h-36 border shadow text-center flex flex-col gap-2 text-xl pt-2 absolute right-10 top-6 bg-sky-50 rounded'>
           <button 
             className='text-2xl border border-gray-600 rounded-full flex ms-auto me-2 text-white bg-red-400 hover:bg-red-500' 
             onClick={() => setIsOpen(false)}
@@ -82,19 +90,19 @@ const Header = () => {
             <RxCross2 />
           </button>
           <ul className='flex flex-col gap-2 pb-4  underline-offset-2 decoration-gray-400'>
-            <NavLink>
+            <NavLink to='/userDashboard'>
               <li className='hover:underline'>
-                My Profile
+                Dashboard
               </li>
             </NavLink>
             <hr className='underline'/>
-            <NavLink>
+            {/* <NavLink>
               <li className='hover:underline'>
                 Settings
               </li>
             </NavLink>
-            <hr className='underline'/>
-            <NavLink to='/'>
+            <hr className='underline'/> */}
+            <NavLink to='/' onClick={logout}>
               <li className='hover:underline'>
                 Logout
               </li>
