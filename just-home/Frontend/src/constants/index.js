@@ -488,3 +488,20 @@ export const allImages = [
     img: property1,
   }
 ]
+
+export const amenitiesList = [
+  "Wifi",
+  "Kitchen",
+  "Pool",
+  "Washing Machine",
+  "Iron",
+  "Free parking on premises",
+  "Bath",
+  "Hot water",
+  "TV",
+  "Dryer",
+  "Air conditioning",
+  "Heating",
+  "Security cameras",
+  "Dining Table"
+]

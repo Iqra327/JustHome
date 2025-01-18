@@ -1,12 +1,16 @@
+import profile from "../../../assets/imgs/profile.webp";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Form = () => {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [viewPass, setViewPass] = useState(false);
   const [viewConfPass, setViewConfPass] = useState(false);
+  const [profileImg, setProfileImg] = useState(undefined);
+  const [profileImgUrl, setProfileImgUrl] = useState('');
+
   const {register, handleSubmit, formState: { errors }, watch, reset} = useForm({
     reValidateMode: 'onSubmit'
   });
@@ -16,9 +20,34 @@ const Form = () => {
     setIsForgotPassword(false);
   };
 
+  useEffect(() => {
+    if(profileImg){
+      const imageUrl = URL.createObjectURL(profileImg);
+      setProfileImgUrl(imageUrl);
+    }
+  },[profileImg]);
+
   return (
-    <div className="mt-12 w-full max-w-xl">
+    <div className="mt-6 w-full max-w-xl">
       <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+        <div className="w-full max-w-52 mx-auto mb-6 flex flex-col items-center gap-3">
+          <div className="rounded-full w-32 h-32 border">
+            <img
+              src={profileImgUrl}
+              alt="profile"
+              className="rounded-full w-32 h-32 object-cover border"
+            />
+          </div>
+          <label htmlFor="profileImg" className="text-lg cursor-pointer">Change Profile</label>          
+          <input 
+            type="file" 
+            id="profileImg"
+            onChange={(e) => setProfileImg(e.target.files[0])} 
+            hidden
+            accept="image/*"
+          />
+        </div>
+
         <div className="flex items-center gap-16 w-full">
           <label className="sm:text-xl mt-2 text-sky-950">Name</label>
           <input
