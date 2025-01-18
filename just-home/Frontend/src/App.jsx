@@ -15,6 +15,7 @@ import Favorites from "./components/UserSide/Favorites/Favorites";
 import Bookings from "./components/UserSide/Booking/Bookings";
 import Setting from "./components/UserSide/Settings/Setting";
 import AdminDashboardLayout from "./layout/AdminDashboardLayout";
+import PropertyListing from "./components/AdminSide/PropertyListings/PropertyListing";
 
 function App() {
   const router = createBrowserRouter(
@@ -45,6 +46,7 @@ function App() {
         {/* admin dashboard layout */}
         <Route path="/adminDashboard" element={<AdminDashboardLayout />}>
           <Route path="chat" element={<AdminChat />} />
+          <Route path="propertyListing" element={<PropertyListing />} />
         </Route>
       </>
     )

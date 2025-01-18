@@ -12,6 +12,8 @@ const Header = () => {
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const token = useSelector((state) => state.auth.token);
+  const user = useSelector((state) => state.auth.user);
+  
   const dispatch = useDispatch();
 
   const logout = () => {
@@ -90,7 +92,7 @@ const Header = () => {
             <RxCross2 />
           </button>
           <ul className='flex flex-col gap-2 pb-4  underline-offset-2 decoration-gray-400'>
-            <NavLink to='/userDashboard'>
+            <NavLink to={`${user.role === 'user' ? '/userDashboard' : '/adminDashboard'}`}>
               <li className='hover:underline'>
                 Dashboard
               </li>

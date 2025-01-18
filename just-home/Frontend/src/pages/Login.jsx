@@ -64,9 +64,6 @@ const Login = () => {
       });
     }
   }
-
-  const user = useSelector((state) => state.auth.user);
-  console.log(user);
   
   return (
     <div className="px-4">

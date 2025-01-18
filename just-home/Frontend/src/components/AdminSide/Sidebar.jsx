@@ -20,14 +20,14 @@ const Sidebar = () => {
             Dashboard
           </NavLink>
         </div>
-        <div>
+        {/* <div>
           <NavLink to='/' className={({isActive}) => isActive ? 'font-bold' : ''}>
             My Bookings
           </NavLink>
-        </div>
+        </div> */}
         <div>
-          <NavLink to='/' className={({isActive}) => isActive ? 'font-bold' : ''}>
-            Favorites
+          <NavLink to='/adminDashboard/propertyListing' className={({isActive}) => isActive ? 'font-bold' : ''}>
+            Property Listings
           </NavLink>
         </div>
         <div>
