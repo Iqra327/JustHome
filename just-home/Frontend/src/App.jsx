@@ -3,6 +3,7 @@ import { About, Home, Properties, Login, SignUp, Contact } from "./pages/index";
 import {
   createBrowserRouter,
   createRoutesFromElements,
+  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -15,7 +16,9 @@ import Favorites from "./components/UserSide/Favorites/Favorites";
 import Bookings from "./components/UserSide/Booking/Bookings";
 import Setting from "./components/UserSide/Settings/Setting";
 import AdminDashboardLayout from "./layout/AdminDashboardLayout";
-import PropertyListing from "./components/AdminSide/PropertyListings/PropertyListing";
+import PropertyListing from "./components/AdminSide/Properties/PropertyListing";
+import AdminDashboard from "./components/AdminSide/Dashboard/AdminDashboard";
+import AddProperty from "./components/AdminSide/Properties/AddProperty";
 
 function App() {
   const router = createBrowserRouter(
@@ -36,6 +39,7 @@ function App() {
 
         {/* user dashboard layout */}
         <Route path="/userDashboard" element={<UserDashboardLayout />}>
+          <Route index element={<Navigate to='/userDashboard/dashboard' replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="chat" element={<UserChat />} />
           <Route path="favorites" element={<Favorites />} />
@@ -45,8 +49,11 @@ function App() {
 
         {/* admin dashboard layout */}
         <Route path="/adminDashboard" element={<AdminDashboardLayout />}>
+          <Route index element={<Navigate to="/adminDashboard/dashboard" replace />}/>
+          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="chat" element={<AdminChat />} />
           <Route path="propertyListing" element={<PropertyListing />} />
+          <Route path="propertyListing/newProperty" element={<AddProperty />} />
         </Route>
       </>
     )

@@ -5,7 +5,7 @@ import { amenitiesList } from "../../../constants";
 
 const steps = ["Property Details", "Amenities", "Upload Images"];
 
-const PropertyListing = () => {
+const AddProperty = () => {
   const { register, handleSubmit, formState, reset } = useForm();
   const { errors } = formState;
 
@@ -131,4 +131,4 @@ const PropertyListing = () => {
   );
 };
 
-export default PropertyListing;
+export default AddProperty;
