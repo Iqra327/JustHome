@@ -1,8 +1,9 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
+const path = require('path');
 
-const updateUserService = async (id, paramsId, newPassword) => {
-  if(id !== paramsId){
+const updateUserService = async (id, userId, newPassword, profileImg) => {
+  if(id !== userId){
     return {
       status: 401,
       message: "Unauthorized"
@@ -10,16 +11,17 @@ const updateUserService = async (id, paramsId, newPassword) => {
   }
 
   try {
-    let hashPassword;
-    if(newPassword){
-      hashPassword = await bcrypt.hash(newPassword, 10);
+    const updateFields = {};
+    if (newPassword) {
+      const hashPassword = await bcrypt.hash(newPassword, 10);
+      updateFields.password = hashPassword;
+    }
+    if (profileImg) {
+      updateFields.avatar = profileImg;
     }
     
-    const updatedUser = await User.findByIdAndUpdate(paramsId, {
-      $set: {
-        password: hashPassword
-      }
-    },
+    console.log('Profile Image:', profileImg);
+    const updatedUser = await User.findByIdAndUpdate(userId, {$set: updateFields},
     {new: true}
     );
 
@@ -30,9 +32,12 @@ const updateUserService = async (id, paramsId, newPassword) => {
       }
     }
 
+    const avatarUrl = `http://localhost:5000/${updatedUser.avatar.replace(/\\/g, '/')}`;
+
     return {
       status: 200,
-      message: "Your profile has been updated successfully!"
+      message: "Your profile has been updated successfully!",
+      avatar: avatarUrl
     }
 
   } catch (error) {

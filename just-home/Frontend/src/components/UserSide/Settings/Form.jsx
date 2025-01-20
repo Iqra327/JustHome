@@ -3,29 +3,41 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { updateUserProfile } from "../../../../api/userApi";
+import { useSelector } from "react-redux";
 
 const Form = () => {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [viewPass, setViewPass] = useState(false);
   const [viewConfPass, setViewConfPass] = useState(false);
-  const [profileImg, setProfileImg] = useState(undefined);
-  const [profileImgUrl, setProfileImgUrl] = useState('');
+  const [avatar, setAvatar] = useState(profile);
+  const user = useSelector((state) => state.auth.user);
+  const token = useSelector((state) => state.auth.token);
+  console.log(user)
 
-  const {register, handleSubmit, formState: { errors }, watch, reset} = useForm({
+  const {register, handleSubmit, formState: { errors }, watch} = useForm({
     reValidateMode: 'onSubmit'
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    const formData = new FormData();
+    
+    if (data.profileImg && data.profileImg.length > 0) {
+      formData.append("profileImg", data.profileImg[0]);
+    }
+    formData.append("newPassword", data.newPassword);
+    
+    try {
+      const response = await updateUserProfile(user.id, formData, token);
+      console.log(response);
+      const updatedAvatar = response.data?.avatar || profile;
+      setAvatar(updatedAvatar);
+      console.log(updatedAvatar);
+    } catch (error) {
+      console.log(error)
+    }
     setIsForgotPassword(false);
   };
-
-  useEffect(() => {
-    if(profileImg){
-      const imageUrl = URL.createObjectURL(profileImg);
-      setProfileImgUrl(imageUrl);
-    }
-  },[profileImg]);
 
   return (
     <div className="mt-6 w-full max-w-xl">
@@ -33,7 +45,7 @@ const Form = () => {
         <div className="w-full max-w-52 mx-auto mb-6 flex flex-col items-center gap-3">
           <div className="rounded-full w-32 h-32 border">
             <img
-              src={profileImgUrl}
+              src={avatar || profile}
               alt="profile"
               className="rounded-full w-32 h-32 object-cover border"
             />
@@ -42,9 +54,9 @@ const Form = () => {
           <input 
             type="file" 
             id="profileImg"
-            onChange={(e) => setProfileImg(e.target.files[0])} 
             hidden
             accept="image/*"
+            {...register('profileImg')}
           />
         </div>
 
