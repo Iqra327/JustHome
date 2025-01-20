@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Stepper, Step, StepLabel, Button, Box } from "@mui/material";
-import { amenitiesList } from "../../../constants";
+import { Button, Box } from "@mui/material";
+import {PropertyDetails, Location, UploadImages, AdditionalDetails} from "./PropertyFormSteps/index"
+import StepperComponent from "./Stepper";
+import { FaArrowLeft } from 'react-icons/fa';
+import { NavLink } from "react-router-dom";
 
-const steps = ["Property Details", "Amenities", "Upload Images"];
+const steps = ["Property Details", "Location", "Upload Images", "Additional Details"];
 
 const AddProperty = () => {
-  const { register, handleSubmit, formState, reset } = useForm();
+  const { register, handleSubmit, formState, reset } = useForm({
+    reValidateMode: 'onSubmit'
+  });
   const { errors } = formState;
 
   const [activeStep, setActiveStep] = useState(0);
@@ -28,106 +33,40 @@ const AddProperty = () => {
   const onSubmit = (data) => handleNext(data);
 
   return (
-    <div className="w-full max-w-3xl mx-auto mt-8">
-      <h1 className="text-2xl text-sky-900 font-bold mb-2">Property Listing Form</h1>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+    <>
+      <div className="pt-5 ps-8 flex gap-3 text-sky-900">
+        <div className='text-2xl w-full max-w-9 h-9 border-2 rounded-full py-1 ps-1 hover:border-sky-800'>
+        <NavLink to='/adminDashboard/propertyListing'>
+          <FaArrowLeft />
+        </NavLink>
+        </div>
+        <h1 className="text-2xl text-sky-900 font-bold mb-5 underline underline-offset-8">Property Listing Form</h1>
+      </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3" noValidate>
-        {activeStep === 0 && (
-          <>
-            <label htmlFor="propName" className="sm:text-xl text-sky-950">
-              Property Name
-            </label>
-            <input
-              id="propName"
-              type="text"
-              className="border p-2 rounded outline-slate-400"
-              {...register("propName", { required: "Please add property name" })}
-            />
-            <p className="text-red-600">{errors.propName?.message}</p>
+      <div className="w-full max-w-3xl mx-auto">
+        <StepperComponent steps={steps} activeStep={activeStep} />
 
-            <label htmlFor="description" className="sm:text-xl text-sky-950">
-              Description
-            </label>
-            <textarea
-              id="description"
-              className="border p-2 rounded outline-slate-400"
-              {...register("description", { required: "Please add description" })}
-            />
-            <p className="text-red-600">{errors.description?.message}</p>
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 border mt-8 bg-white shadow-lg p-8 px-12 rounded-md" noValidate>
+          {activeStep === 0 && <PropertyDetails register={register} errors={errors} />}
+          {activeStep === 1 && <Location register={register} errors={errors} />}
+          {activeStep === 2 && <UploadImages register={register} errors={errors} />}
+          {activeStep === 3 && <AdditionalDetails register={register} errors={errors} />}
 
-            <label htmlFor="price" className="sm:text-xl text-sky-950">
-              Price
-            </label>
-            <input
-              id="price"
-              type="number"
-              className="border p-2 rounded outline-slate-400"
-              {...register("price", { required: "Please add price" })}
-            />
-            <p className="text-red-600">{errors.price?.message}</p>
-          </>
-        )}
-
-        {activeStep === 1 && (
-          <>
-            <h1 className="sm:text-xl text-sky-950">Select Amenities</h1>
-            <div className="flex flex-col gap-5">
-              {amenitiesList.map((amenity, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id={`amenity-${index}`}
-                    className="cursor-pointer"
-                    value={amenity}
-                    {...register("amenities")}
-                  />
-                  <label htmlFor={`amenity-${index}`} className="text-sky-950 cursor-pointer">
-                    {amenity}
-                  </label>
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {activeStep === 2 && (
-          <>
-            <label htmlFor="img" className="sm:text-xl text-sky-950">
-              Upload Images
-            </label>
-            <input
-              id="img"
-              type="file"
-              multiple
-              accept="image/*"
-              {...register("img", { required: "Please add some of the property images" })}
-            />
-            <p className="text-red-600">{errors.img?.message}</p>
-          </>
-        )}
-
-        <Box display="flex" justifyContent="space-between" mt={3}>
-          <Button
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            variant="outlined"
-            color="primary"
-          >
-            Back
-          </Button>
-          <Button type="submit" variant="contained" color="primary">
-            {activeStep === steps.length - 1 ? "Submit" : "Next"}
-          </Button>
-        </Box>
-      </form>
-    </div>
+          <Box display="flex" justifyContent="space-between" mt={3}>
+            <Button
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              variant="outlined"
+            >
+              Back
+            </Button>
+            <Button type="submit" variant="contained" className="!bg-sky-800 hover:!bg-sky-700">
+              {activeStep === steps.length - 1 ? "Submit" : "Next"}
+            </Button>
+          </Box>
+        </form>
+      </div>
+    </>
   );
 };
 
