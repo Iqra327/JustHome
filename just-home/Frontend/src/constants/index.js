@@ -115,6 +115,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 1,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -123,6 +124,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 2,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -131,6 +133,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 3,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -139,6 +142,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 4,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -147,6 +151,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 5,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -155,6 +160,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 6,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -163,6 +169,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 7,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -171,6 +178,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 8,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -179,6 +187,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 9,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -187,6 +196,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 10,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -195,6 +205,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 11,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -203,6 +214,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 12,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -211,6 +223,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 13,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -219,6 +232,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 14,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -227,6 +241,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 15,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -235,6 +250,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 16,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -243,6 +259,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 17,
+    uploadedOn: "2025-01-12",
   },
   {
     img: home1,
@@ -251,6 +268,7 @@ export const properties = [
     location: "Karachi",
     description: "A modern apartment in the heart of New York, City.",
     id: 18,
+    uploadedOn: "2025-01-12",
   },
 ];
 
