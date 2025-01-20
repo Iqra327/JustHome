@@ -19,6 +19,7 @@ import AdminDashboardLayout from "./layout/AdminDashboardLayout";
 import PropertyListing from "./components/AdminSide/Properties/PropertyListing";
 import AdminDashboard from "./components/AdminSide/Dashboard/AdminDashboard";
 import AddProperty from "./components/AdminSide/Properties/AddProperty";
+import AdminSettings from "./components/AdminSide/Settings/Setting";
 
 function App() {
   const router = createBrowserRouter(
@@ -54,6 +55,7 @@ function App() {
           <Route path="chat" element={<AdminChat />} />
           <Route path="propertyListing" element={<PropertyListing />} />
           <Route path="propertyListing/newProperty" element={<AddProperty />} />
+          <Route path="setting" element={<AdminSettings />} />
         </Route>
       </>
     )

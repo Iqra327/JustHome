@@ -49,7 +49,7 @@ const Sidebar = () => {
       </div>
 
       {/* setting */}
-      <NavLink to='' className='flex items-center gap-3 text-xl mt-auto pb-5 w-28'>
+      <NavLink to='/adminDashboard/setting' className='flex items-center gap-3 text-xl mt-auto pb-5 w-28'>
         <IoSettingsOutline />        
         <p>Settings</p>
       </NavLink>
