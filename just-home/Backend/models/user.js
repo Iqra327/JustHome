@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate(value){
       if(!validator.isEmail(value)){
-        throw new Error("Invalid Email!")
+        throw new Error("Please provide a valid email address!")
       }
     }
   },
@@ -25,7 +25,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum:['user', 'admin'],
     default: 'user'
-  }
+  },
+  avatar: {
+    type: String,
+    required: false
+  },
 }, {timestamps: true});
 
 //create model
