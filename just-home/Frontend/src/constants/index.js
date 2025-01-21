@@ -523,3 +523,41 @@ export const amenitiesList = [
   "Security cameras",
   "Dining Table"
 ]
+
+export const users = [
+  {
+    "userId": "123",
+    "userName": "John Doe",
+    "userEmail": "john@example.com",
+    "totalBookings": 5,
+    "bookings": [
+      {
+        "bookingId": "1",
+        "propertyName": "Luxury Villa",
+        "location": "Miami, FL",
+        "checkIn": "2024-02-01",
+        "checkOut": "2024-02-05",
+        "price": 1200,
+        "status": "Confirmed"
+      },
+      {
+        "bookingId": "2",
+        "propertyName": "Beachside Apartment",
+        "location": "Los Angeles, CA",
+        "checkIn": "2024-03-10",
+        "checkOut": "2024-03-15",
+        "price": 900,
+        "status": "Pending"
+      },
+      {
+        "bookingId": "2",
+        "propertyName": "Beachside Apartment",
+        "location": "Los Angeles, CA",
+        "checkIn": "2024-03-10",
+        "checkOut": "2024-03-15",
+        "price": 900,
+        "status": "Pending"
+      }
+    ]
+  }
+]
