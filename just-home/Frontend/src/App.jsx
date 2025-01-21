@@ -20,6 +20,8 @@ import PropertyListing from "./components/AdminSide/Properties/PropertyListing";
 import AdminDashboard from "./components/AdminSide/Dashboard/AdminDashboard";
 import AddProperty from "./components/AdminSide/Properties/AddProperty";
 import AdminSettings from "./components/AdminSide/Settings/Setting";
+import ManageBookings from "./components/AdminSide/ManageBookings/ManageBookings";
+import Amenities from "./components/AdminSide/Amenities/Amenities";
 
 function App() {
   const router = createBrowserRouter(
@@ -56,6 +58,8 @@ function App() {
           <Route path="propertyListing" element={<PropertyListing />} />
           <Route path="propertyListing/newProperty" element={<AddProperty />} />
           <Route path="setting" element={<AdminSettings />} />
+          <Route path="bookings" element={<ManageBookings />} />
+          <Route path="amenities" element={<Amenities />} />
         </Route>
       </>
     )
