@@ -1,70 +1,114 @@
-import profile from "../../../assets/imgs/profile.webp";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { MdDelete, MdDeleteOutline, MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from "react-icons/io5";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateUserProfile } from "../../../../api/userApi";
+import { updateUserPassword, updateUserProfile, removeUserProfile } from "../../../../api/userApi";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../../../redux/slices/authSlice";
+import profile from "../../../assets/imgs/blankProfile.png"
 
 const Form = () => {
   const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [viewPass, setViewPass] = useState(false);
   const [viewConfPass, setViewConfPass] = useState(false);
-  const [avatar, setAvatar] = useState(profile);
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const token = useSelector((state) => state.auth.token);
-  console.log(user)
 
   const {register, handleSubmit, formState: { errors }, watch} = useForm({
     reValidateMode: 'onSubmit'
   });
 
-  const onSubmit = async (data) => {
-    const formData = new FormData();
-    
-    if (data.profileImg && data.profileImg.length > 0) {
-      formData.append("profileImg", data.profileImg[0]);
+  //handling profile image upload functionality
+  const handleProfileImageUpload = async (e) => {
+    console.log('entered in console')
+    const {avatarId} = user;
+    const file = e.target.files[0];  
+    if (file) {
+      const formData = new FormData();
+      formData.append("image", file);
+      formData.append("avatarId", avatarId);
+      try {
+        console.log('updating profile')
+        const response = await updateUserProfile(user.id, formData, token);
+        const updatedUser = response?.data?.user;
+        dispatch(loginUser({ user: updatedUser , token}));
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
     }
-    formData.append("newPassword", data.newPassword);
-    
+  }
+
+  //handling profile image remove functionality
+  const handleProfileImageRemove = async () => {
+    console.log('hi entered');
+    const {avatarId} = user;
     try {
-      const response = await updateUserProfile(user.id, formData, token);
+      console.log('hi i am try')
+      console.log(token)
+      const response = await removeUserProfile(user.id, { avatarId }, token);
       console.log(response);
-      const updatedAvatar = response.data?.avatar || profile;
-      setAvatar(updatedAvatar);
-      console.log(updatedAvatar);
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
+  }
+  
+  //handling updating password functionalty
+  const handlePasswordUpdate = async (data) => {
+    console.log(data);
+
+    const { newPassword } = data;
+    if(newPassword){
+      try {
+        console.log('entered in try catch block')
+        const response = await updateUserPassword(user.id, { newPassword }, token);
+        console.log(response);
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     setIsForgotPassword(false);
   };
 
   return (
     <div className="mt-6 w-full max-w-xl">
-      <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-6" onSubmit={handleSubmit(handlePasswordUpdate)}>
         <div className="w-full max-w-52 mx-auto mb-6 flex flex-col items-center gap-3">
           <div className="rounded-full w-32 h-32 border">
             <img
-              src={avatar || profile}
+              src={user.avatar ? user.avatar : profile}
               alt="profile"
               className="rounded-full w-32 h-32 object-cover border"
             />
           </div>
-          <label htmlFor="profileImg" className="text-lg cursor-pointer">Change Profile</label>          
+          <div className="flex items-center gap-3">
+            <label htmlFor="profileImage" className="text-lg cursor-pointer">
+            {user.avatar ? 'Change Profile' : 'Upload Profile'}
+            </label>
+            {
+              user.avatar && 
+                <button type="button" onClick={() => handleProfileImageRemove()}>
+                  <MdDeleteOutline size={20} color="red" cursor='pointer'/>
+                </button> 
+            }         
+          </div>
           <input 
             type="file" 
-            id="profileImg"
+            id="profileImage"
             hidden
-            accept="image/*"
-            {...register('profileImg')}
+            accept=".jpg,.jpeg,.png"
+            onChange={(e) => { handleProfileImageUpload(e)}}
           />
         </div>
 
         <div className="flex items-center gap-16 w-full">
-          <label className="sm:text-xl mt-2 text-sky-950">Name</label>
+          <label className="sm:text-xl mt-2 text-sky-950">Username</label>
           <input
             type="text"
-            value="iqra"
+            value={user.username}
             disabled
             className="p-2 w-full max-w-lg outline-none border"
             placeholder="Name"
@@ -75,7 +119,7 @@ const Form = () => {
           <label className="sm:text-xl mt-2 text-sky-950">Email</label>
           <input
             type="text"
-            value="iqra@gmail.com"
+            value={user.email}
             disabled
             className="p-2 w-full max-w-lg outline-none border"
             placeholder="Email"

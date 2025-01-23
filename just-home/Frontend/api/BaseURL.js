@@ -10,3 +10,10 @@ export const formData = axios.create({
     'Content-Type': 'multipart/form-data'
   }
 })
+
+export const jsonData = axios.create({
+  baseURL: 'http://localhost:5000',
+  headers: {
+    'Content-Type' : 'application/json'
+  }
+})
