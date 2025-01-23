@@ -4,12 +4,12 @@ const auth = require('./routes/authRoute');
 const contact = require('./routes/contactRoute');
 const user = require('./routes/userRoute');
 const connectDb = require('./utils/database');
+const socketHandler = require('./utils/socket');
+const multerErrorHandler = require('./middlewares/errorHandler');
 const cors = require('cors');
 require('dotenv').config();
 const app = express()
 const port = process.env.PORT || 5000;
-
-const socketHandler = require('./utils/socket');
 
 app.use(express.json());
 app.use(cors());
@@ -28,6 +28,9 @@ socketHandler(server);
 app.use('/api/v1', auth);
 app.use('/api/v1', contact);
 app.use('/api/v1', user);
+
+//middlerware
+app.use(multerErrorHandler);
 
 connectDb().then(() => {
   server.listen(port, () => {

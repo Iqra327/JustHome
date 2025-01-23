@@ -30,6 +30,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  avatarId: {
+    type: String,
+    required: false
+  }
 }, {timestamps: true});
 
 //create model

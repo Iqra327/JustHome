@@ -14,6 +14,14 @@ const signupService = async (username, email, password) => {
         message: "User already exists"
       }
     }
+
+    const existingUsername = await User.findOne({username});
+    if(existingUsername){
+      return {
+        status: 409,
+        message: "Username is already in use. Please choose another one!"
+      }
+    }
     //securing the password
     const hashpassword = await bcrypt.hash(password, 10); 
    
@@ -21,7 +29,8 @@ const signupService = async (username, email, password) => {
     const user = new User({
       email, 
       username, 
-      password: hashpassword
+      password: hashpassword,
+      avatar: ''
     });
     await user.save();
     return {
@@ -72,6 +81,8 @@ const loginService = async (email, password) => {
         username: user.username,
         email: user.email,
         role: user.role,
+        avatar: user.avatar,
+        avatarId: user.avatarId
       },
     } 
   } catch (error) {
