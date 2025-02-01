@@ -1,6 +1,6 @@
 const { updatePassword, updateProfile, removeProfile } = require('../controllers/userController');
 const router = require('express').Router();
-const verifyUser = require('../middlewares/verifyUser');
+const {verifyUser} = require('../middlewares/auth');
 const upload = require('../middlewares/multer');
 
 //route for updating password
