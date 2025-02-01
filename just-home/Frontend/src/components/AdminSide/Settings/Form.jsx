@@ -1,8 +1,8 @@
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { MdDelete, MdDeleteOutline, MdOutlineRemoveRedEye } from "react-icons/md";
 import { IoEyeOffOutline } from "react-icons/io5";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { updateUserPassword, updateUserProfile } from "../../../../api/userApi";
+import { updateUserPassword, updateUserProfile, removeUserProfile } from "../../../../api/userApi";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../../redux/slices/authSlice";
@@ -23,12 +23,12 @@ const Form = () => {
   //handling profile image upload functionality
   const handleProfileImageUpload = async (e) => {
     console.log('entered in console')
-    const file = e.target.files[0];
-    console.log(file);    
+    const {avatarId} = user;
+    const file = e.target.files[0];  
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
-
+      formData.append("avatarId", avatarId);
       try {
         console.log('updating profile')
         const response = await updateUserProfile(user.id, formData, token);
@@ -41,11 +41,25 @@ const Form = () => {
     }
   }
 
+  //handling profile image remove functionality
+  const handleProfileImageRemove = async () => {
+    console.log('hi entered');
+    const {avatarId} = user;
+    try {
+      console.log('hi i am try')
+      console.log(token)
+      const response = await removeUserProfile(user.id, { avatarId }, token);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   //handling updating password functionalty
-  const onSubmit = async (data) => {
+  const handlePasswordUpdate = async (data) => {
     console.log(data);
 
-    const newPassword = data.newPassword;
+    const { newPassword } = data;
     if(newPassword){
       try {
         console.log('entered in try catch block')
@@ -61,7 +75,7 @@ const Form = () => {
 
   return (
     <div className="mt-6 w-full max-w-xl">
-      <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
+      <form className="flex flex-col gap-6" onSubmit={handleSubmit(handlePasswordUpdate)}>
         <div className="w-full max-w-52 mx-auto mb-6 flex flex-col items-center gap-3">
           <div className="rounded-full w-32 h-32 border">
             <img
@@ -70,9 +84,17 @@ const Form = () => {
               className="rounded-full w-32 h-32 object-cover border"
             />
           </div>
-          <label htmlFor="profileImage" className="text-lg cursor-pointer">
-          {user.avatar ? 'Change Profile' : 'Upload Profile'}
-          </label>          
+          <div className="flex items-center gap-3">
+            <label htmlFor="profileImage" className="text-lg cursor-pointer">
+            {user.avatar ? 'Change Profile' : 'Upload Profile'}
+            </label>
+            {
+              user.avatar && 
+                <button type="button" onClick={() => handleProfileImageRemove()}>
+                  <MdDeleteOutline size={20} color="red" cursor='pointer'/>
+                </button> 
+            }         
+          </div>
           <input 
             type="file" 
             id="profileImage"

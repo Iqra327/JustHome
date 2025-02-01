@@ -1,14 +1,14 @@
 const PropertyDetails = ({ register, errors }) => (
   <>
     <h1 className='text-center text-xl text-gray-400'>Add Property Details</h1>
-    <label htmlFor="propName" className="sm:text-xl text-sky-950">
+    <label htmlFor="name" className="sm:text-xl text-sky-950">
       Property Name
     </label>
     <input
-      id="propName"
+      id="name"
       type="text"
       className="border p-2 rounded outline-slate-400"
-      {...register("propName", { 
+      {...register("name", { 
         required: "Please add property name",
       })}
     />

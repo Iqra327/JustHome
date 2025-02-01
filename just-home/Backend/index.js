@@ -3,6 +3,7 @@ const http = require('http');
 const auth = require('./routes/authRoute');
 const contact = require('./routes/contactRoute');
 const user = require('./routes/userRoute');
+const property = require('./routes/propertyRoute');
 const connectDb = require('./utils/database');
 const socketHandler = require('./utils/socket');
 const multerErrorHandler = require('./middlewares/errorHandler');
@@ -28,6 +29,7 @@ socketHandler(server);
 app.use('/api/v1', auth);
 app.use('/api/v1', contact);
 app.use('/api/v1', user);
+app.use('/api/v1', property);
 
 //middlerware
 app.use(multerErrorHandler);
