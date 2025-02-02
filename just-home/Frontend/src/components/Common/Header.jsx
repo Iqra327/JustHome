@@ -11,8 +11,7 @@ const Header = () => {
 
   const [open, setOpen] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const token = useSelector((state) => state.auth.token);
-  const user = useSelector((state) => state.auth.user);
+  const {token, user} = useSelector((state) => state.auth);
   
   const dispatch = useDispatch();
 

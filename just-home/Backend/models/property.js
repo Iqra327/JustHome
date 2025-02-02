@@ -21,7 +21,11 @@ const propertySchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  imagesUrl: {
+  images: {
+    type: Array,
+    required: true
+  },
+  imagesId: {
     type: Array,
     required: true
   },
@@ -41,10 +45,10 @@ const propertySchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  amenities:{
-    type: Array,
-    required: true,
-  },
+  amenities: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Amenity'
+  }],
 }, {timestamps: true});
 
 const Property = mongoose.model("Property", propertySchema);

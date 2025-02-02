@@ -24,7 +24,7 @@ const Form = () => {
   const handleProfileImageUpload = async (e) => {
     console.log('entered in console')
     const {avatarId} = user;
-    const file = e.target.files[0];  
+    const file = e.target.files[0]; 
     if (file) {
       const formData = new FormData();
       formData.append("image", file);
@@ -62,7 +62,6 @@ const Form = () => {
     const { newPassword } = data;
     if(newPassword){
       try {
-        console.log('entered in try catch block')
         const response = await updateUserPassword(user.id, { newPassword }, token);
         console.log(response);
       } catch (error) {
@@ -79,7 +78,7 @@ const Form = () => {
         <div className="w-full max-w-52 mx-auto mb-6 flex flex-col items-center gap-3">
           <div className="rounded-full w-32 h-32 border">
             <img
-              src={user.avatar ? user.avatar : profile}
+              src={user?.avatar ? user.avatar : profile}
               alt="profile"
               className="rounded-full w-32 h-32 object-cover border"
             />

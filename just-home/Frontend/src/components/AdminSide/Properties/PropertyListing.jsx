@@ -1,8 +1,17 @@
 import { NavLink } from "react-router-dom";
 import { properties } from "../../../constants";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProperties } from "../../../redux/slices/propertiesSlice";
 
 const PropertyListing = () => {
-  
+  const {data: properties} = useSelector((state) => state.properties);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchProperties());
+  },[])
+  console.log(properties);
   return (
     <div className="p-6">
       {/* upper part from table */}

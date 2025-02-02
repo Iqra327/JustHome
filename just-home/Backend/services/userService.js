@@ -81,7 +81,6 @@ const updateProfileService = async (id, userId, image, avatarId ) => {
     },{new: true}
     );
 
-    console.log(updatedUser);
     if(!updatedUser){
       return {
         status: 404,

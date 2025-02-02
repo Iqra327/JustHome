@@ -1,14 +1,22 @@
 const cloudinary = require('cloudinary').v2;
 const cloudinaryConfig = require('../utils/cloudinary');
 
-const uploadImage = async (imagePath) => {
+const uploadImage = async (imagePaths) => {
   try {
     cloudinaryConfig();
-    const result = await cloudinary.uploader.upload(imagePath, {
-      folder: "Just Home",
+    if (!Array.isArray(imagePaths)) {
+      imagePaths = [imagePaths];
+    }
+
+    const uploadPromises = imagePaths.map((imagePath) => {
+      return cloudinary.uploader.upload(imagePath, {
+        folder: "Just Home",
+      });
     });
-  
-    return result; 
+
+    const result = await Promise.all(uploadPromises);
+
+    return result.length === 1 ? result[0] : result;
   } catch (error) {
     console.log(error);
   }
