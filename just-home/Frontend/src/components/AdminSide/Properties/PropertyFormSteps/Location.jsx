@@ -27,7 +27,7 @@ const Location = ({ register, errors }) => (
         } 
       })}
     />
-    <p className="text-red-600">{errors.locationLink?.message}</p>
+    <p className="text-red-600">{errors.locationURL?.message}</p>
   </>
 );
 

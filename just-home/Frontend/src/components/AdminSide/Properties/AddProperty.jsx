@@ -1,28 +1,52 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button, Box } from "@mui/material";
-import {PropertyDetails, Location, UploadImages, AdditionalDetails} from "./PropertyFormSteps/index"
+import {PropertyDetails, Location, UploadImages, AdditionalDetails, Amenities} from "./PropertyFormSteps/index"
 import StepperComponent from "./Stepper";
 import { FaArrowLeft } from 'react-icons/fa';
 import { NavLink } from "react-router-dom";
+import { createProperty } from "../../../../api/propertyApi";
+import { useSelector } from "react-redux";
 
-const steps = ["Property Details", "Location", "Upload Images", "Additional Details"];
+const steps = ["Property Details", "Location", "Select Amenities", "Upload Images", "Additional Details"];
 
 const AddProperty = () => {
-  const { register, handleSubmit, formState, reset } = useForm({
+  const {token} = useSelector((state) => state.auth);
+  const { register, handleSubmit, formState, reset , control} = useForm({
     reValidateMode: 'onSubmit'
   });
   const { errors } = formState;
 
   const [activeStep, setActiveStep] = useState(0);
   const [formData, setFormData] = useState({});
+  const [selectedImages, setSelectedImages] = useState([]);
 
-  const handleNext = (data) => {
-    setFormData({ ...formData, ...data });
+  //creating new property 
+  const handleNext = async (data) => {
+    const updatedFormData = { ...formData, ...data, images: selectedImages };
+    setFormData(updatedFormData);
+  
     if (activeStep === steps.length - 1) {
-      console.log("Final Form Data:", { ...formData, ...data });
-      reset();
-      setActiveStep(0);
+      const Data = new FormData();
+  
+      for (let key in updatedFormData) {
+        if (key === "images") {
+          updatedFormData.images.forEach((file) => Data.append("images", file));
+        } else if (Array.isArray(updatedFormData[key])) {
+          updatedFormData[key].forEach((item) => Data.append(key, item));
+        } else {
+          Data.append(key, updatedFormData[key]);
+        }
+      }
+  
+      try {
+        const response = await createProperty(Data, token);
+        console.log(response);
+        reset();
+        setActiveStep(0);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
       setActiveStep((prevStep) => prevStep + 1);
     }
@@ -49,8 +73,9 @@ const AddProperty = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-3 border mt-8 bg-white shadow-lg p-8 px-12 rounded-md" noValidate>
           {activeStep === 0 && <PropertyDetails register={register} errors={errors} />}
           {activeStep === 1 && <Location register={register} errors={errors} />}
-          {activeStep === 2 && <UploadImages register={register} errors={errors} />}
-          {activeStep === 3 && <AdditionalDetails register={register} errors={errors} />}
+          {activeStep === 2 && <Amenities register={register} errors={errors} control={control}/>}
+          {activeStep === 3 && <UploadImages register={register} errors={errors} setImages={setSelectedImages}/>}
+          {activeStep === 4 && <AdditionalDetails register={register} errors={errors} />}
 
           <Box display="flex" justifyContent="space-between" mt={3}>
             <Button

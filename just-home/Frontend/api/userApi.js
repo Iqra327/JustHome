@@ -31,7 +31,7 @@ export const updateUserProfile = async (id, data, token) => {
 //remove profile api
 export const removeUserProfile = async (id, data, token) => {
   try {
-    const response = await jsonData.delete(`api/v1/removeProfile/${id}`, data, {
+    const response = await baseURL.delete(`/api/v1/removeProfile/${id}`, data, {
       headers: {
         Authorization: `Bearer ${token}`
       }

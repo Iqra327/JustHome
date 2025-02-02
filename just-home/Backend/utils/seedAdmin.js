@@ -20,7 +20,8 @@ const seedAdmin = async () => {
       username: 'Admin',
       email: 'admin@gmail.com',
       password: hashedPassword,
-      role: 'admin'
+      role: 'admin',
+      avatar: ''
     })
     
     await admin.save();
