@@ -1,6 +1,6 @@
-const { updatePassword, updateProfile, removeProfile } = require('../controllers/userController');
+const { updatePassword, updateProfile, removeProfile, getAllUsers } = require('../controllers/userController');
 const router = require('express').Router();
-const {verifyUser} = require('../middlewares/auth');
+const {verifyUser, verifyAdmin} = require('../middlewares/auth');
 const upload = require('../middlewares/multer');
 
 //route for updating password
@@ -11,5 +11,8 @@ router.patch('/updateProfile/:userId', verifyUser, upload.single('image'), updat
 
 //route for deleting profile picture
 router.delete('/removeProfile/:userId', verifyUser, removeProfile);
+
+//route for getting all users
+router.get('/users', verifyAdmin, getAllUsers);
 
 module.exports = router;

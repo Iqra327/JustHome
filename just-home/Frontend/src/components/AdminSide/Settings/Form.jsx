@@ -44,11 +44,10 @@ const Form = () => {
   //handling profile image remove functionality
   const handleProfileImageRemove = async () => {
     console.log('hi entered');
-    const {avatarId} = user;
     try {
       console.log('hi i am try')
       console.log(token)
-      const response = await removeUserProfile(user.id, { avatarId }, token);
+      const response = await removeUserProfile(user.id, token);
       console.log(response);
     } catch (error) {
       console.log(error);

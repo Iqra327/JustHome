@@ -107,7 +107,7 @@ const updateProfileService = async (id, userId, image, avatarId ) => {
 }
 
 //remove profile service
-const removeProfileService = async (id, userId, avatarId) => {
+const removeProfileService = async (id, userId) => {
   if(id !== userId){
     return {
       status: 401,
@@ -124,8 +124,8 @@ const removeProfileService = async (id, userId, avatarId) => {
       }
     }
 
-    if(avatarId){
-      await deleteImageFromCloudinary(avatarId);
+    if(user.avatarId){
+      await deleteImageFromCloudinary(user.avatarId);
     }
 
     user.avatar = '';
@@ -142,9 +142,21 @@ const removeProfileService = async (id, userId, avatarId) => {
   }
 }
 
+const getAllUsersService = async () => {
+  try {
+    const users = await User.find({ role: { $ne: "admin" } });
+    return {
+      status: 200,
+      users
+    }
+  } catch (error) {
+    throw error
+  }
+}
 
 module.exports = {
   updatePasswordService,
   updateProfileService,
-  removeProfileService
+  removeProfileService,
+  getAllUsersService
 }

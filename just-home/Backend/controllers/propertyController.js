@@ -37,9 +37,8 @@ const getAllProperties = async (req, res) => {
 //deleting property controller
 const deleteProperty = async (req, res) => {
   try {
-    const {imagesId} = req.body;
     const {id} = req.params;
-    const {status, message} = await deletePropertyService(id, imagesId);
+    const {status, message} = await deletePropertyService(id);
     return res.status(status).json({message});
   } catch (error) {
     return res.status(500).json({message: "Something went wrong. Please try again!"});
