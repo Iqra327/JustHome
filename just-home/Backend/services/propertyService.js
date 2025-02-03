@@ -58,9 +58,31 @@ const getAllPropertiesService = async () => {
 }
 
 //delete property service
-const deletePropertyService = async () => {
+const deletePropertyService = async (id) => {
+  try {
+    const property = await Property.findById(id);
 
-}
+    if (!property) {
+      return {
+        status: 404,
+        message: "Property not found!"
+      };
+    }
+
+    if (property.imagesId && property.imagesId.length > 0) {
+      await Promise.all(property.imagesId.map((imagesId) => deleteImageFromCloudinary(imagesId)));
+    }
+
+    await Property.findByIdAndDelete(id);
+
+    return {
+      status: 200,
+      message: "Property deleted successfully!"
+    };
+  } catch (error) {
+    throw error;
+  }
+};
 
 module.exports = {
   createPropertyService,

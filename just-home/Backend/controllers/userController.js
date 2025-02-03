@@ -1,4 +1,4 @@
-const { updatePasswordService, updateProfileService, removeProfileService } = require('../services/userService');
+const { updatePasswordService, updateProfileService, removeProfileService, getAllUsersService } = require('../services/userService');
 
 //includes updating password controller
 const updatePassword = async (req, res) => {
@@ -35,16 +35,26 @@ const removeProfile = async (req, res) => {
   try {
     const {id} = req.user;
     const {userId} = req.params;
-    const {avatarId} = req.body;
-    const {status, message} = await removeProfileService(id, userId, avatarId);
+    const {status, message} = await removeProfileService(id, userId);
     res.status(status).json({message});
   } catch (error) {
     res.status(500).json({message: "Something went wrong. Please try again later!"})
   }
 }
 
+//get all users controller
+const getAllUsers = async (req, res) => {
+  try {
+    const {status, users} = await getAllUsersService();
+    return res.status(status).json({users}); 
+  } catch (error) {
+    res.status(500).json({message: 'Error fetching all users'});
+  }
+}
+
 module.exports = {
   updatePassword,
   updateProfile,
-  removeProfile
+  removeProfile,
+  getAllUsers
 }

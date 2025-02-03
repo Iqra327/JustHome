@@ -23,3 +23,13 @@ export const getAllProperties = async () => {
     throw error
   }
 }
+
+//delete property api
+export const deleteProperty = async (id) => {
+  try {
+    const response = await baseURL.delete(`/api/v1/properties/${id}`);
+    return response; 
+  } catch (error) {
+    throw error
+  }
+}

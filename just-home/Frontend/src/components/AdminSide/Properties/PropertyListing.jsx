@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
-import { properties } from "../../../constants";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProperties } from "../../../redux/slices/propertiesSlice";
+import { deleteProperty } from "../../../../api/propertyApi";
 
 const PropertyListing = () => {
   const {data: properties} = useSelector((state) => state.properties);
@@ -12,6 +12,17 @@ const PropertyListing = () => {
     dispatch(fetchProperties());
   },[])
   console.log(properties);
+
+  //delete property api
+  const handleDelete = async (id) => {
+    try {
+      const response = await deleteProperty(id);
+      console.log(response); 
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
   return (
     <div className="p-6">
       {/* upper part from table */}
@@ -45,16 +56,16 @@ const PropertyListing = () => {
                 <td className="px-6 py-4">{index + 1}</td>
                 <td className="px-6 py-4">
                   <img
-                    src={property.img}
+                    src={property.images[0]}
                     alt={property.name}
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
-                <td className="px-6 py-4">{property.title}</td>
-                <td className="px-6 py-4">${property.price.toLocaleString()}</td>
-                <td className="px-6 py-4">{property.location}</td>
+                <td className="px-6 py-4">{property.name}</td>
+                <td className="px-6 py-4">{property.price.toLocaleString()}</td>
+                <td className="px-6 py-4">{property.address}</td>
                 <td className="px-6 py-4">
-                  {new Date(property.uploadedOn).toLocaleDateString()}
+                  {new Date(property.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-6 py-4">
                   <div className="flex gap-3">
@@ -64,7 +75,7 @@ const PropertyListing = () => {
                     <button className="text-yellow-500 hover:underline">
                       Edit
                     </button>
-                    <button className="text-red-500 hover:underline">
+                    <button className="text-red-500 hover:underline" onClick={() => handleDelete(property._id)}>
                       Delete
                     </button>
                   </div>

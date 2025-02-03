@@ -1,6 +1,17 @@
+import { useEffect } from "react";
 import Card from "./Card";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../../../redux/slices/authSlice";
 
 const AdminDashboard = () => {
+  const dispatch = useDispatch();
+  const {data: users} = useSelector((state) => state.auth);
+  const {data: properties} = useSelector((state) => state.properties)
+
+  //getting all users length
+  useEffect(() => {
+    dispatch(fetchUsers());  
+  },[dispatch])
 
   return (
     <div className="flex flex-col p-8">
@@ -10,13 +21,13 @@ const AdminDashboard = () => {
       <div className="flex gap-9 ">
         <Card 
           title='Users' 
-          counting='120' 
+          counting={users?.length} 
           subText='Total number of registered users on the platform.'
           className='text-sky-600 '
         />
         <Card 
           title='Properties' 
-          counting='30' 
+          counting={properties?.length} 
           subText='Properties listed and available for booking.'
           className='text-yellow-500'
         />
