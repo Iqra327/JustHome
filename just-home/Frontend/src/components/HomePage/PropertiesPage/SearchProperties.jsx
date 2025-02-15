@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropertyCard from './PropertyCard'
-import { properties } from "../../../constants";
+// import { properties } from "../../../constants";
 import { useForm } from 'react-hook-form';
 import Button from '../../Common/Button';
 import Pagination from '../../Common/Pagination';
+import { fetchProperties } from '../../../redux/slices/propertiesSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 const SearchProperties = () => {
+  const dispatch = useDispatch();
+  const {data: properties} = useSelector((state) => state.properties);
+
+  useEffect(() => {
+    dispatch(fetchProperties());
+  },[])
 
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 8;

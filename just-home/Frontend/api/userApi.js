@@ -31,6 +31,7 @@ export const updateUserProfile = async (id, data, token) => {
 //remove profile api
 export const removeUserProfile = async (id, token) => {
   try {
+    console.log(token);
     const response = await baseURL.delete(`/api/v1/removeProfile/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`
@@ -43,12 +44,12 @@ export const removeUserProfile = async (id, token) => {
 }
 
 //get all users api
-export const getAllUsers = async (token) => {
+export const getAllUsers = async () => {
   try {
     const response = await jsonData.get(`/api/v1/users`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
+      // headers: {
+      //   Authorization: `Bearer ${token}`
+      // }
     });
     return response;
   } catch (error) {

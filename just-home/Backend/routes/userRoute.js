@@ -13,6 +13,6 @@ router.patch('/updateProfile/:userId', verifyUser, upload.single('image'), updat
 router.delete('/removeProfile/:userId', verifyUser, removeProfile);
 
 //route for getting all users
-router.get('/users', verifyAdmin, getAllUsers);
+router.get('/users', getAllUsers);
 
 module.exports = router;

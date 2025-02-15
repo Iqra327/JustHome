@@ -1,16 +1,10 @@
 import { NavLink } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProperties } from "../../../redux/slices/propertiesSlice";
+import { useSelector } from "react-redux";
 import { deleteProperty } from "../../../../api/propertyApi";
 
 const PropertyListing = () => {
   const {data: properties} = useSelector((state) => state.properties);
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchProperties());
-  },[])
   console.log(properties);
 
   //delete property api

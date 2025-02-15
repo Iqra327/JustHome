@@ -1,4 +1,4 @@
-const {createPropertyService, getAllPropertiesService, deletePropertyService} = require('../services/propertyService');
+const {createPropertyService, getAllPropertiesService, deletePropertyService, getSinglePropertyService} = require('../services/propertyService');
 
 // create property controller
 const createProperty = async (req, res) => {
@@ -45,8 +45,20 @@ const deleteProperty = async (req, res) => {
   }
 }
 
+//get single property controller
+const getSingleProperty = async (req, res) => {
+  try {
+    const {id} = req.params;
+    const {status, property} = await getSinglePropertyService(id);
+    return res.status(status).json({property}); 
+  } catch (error) {
+    return res.status(500).json({message: "Something went wrong. Please try again!"})
+  }
+}
+
 module.exports = {
   createProperty,
   getAllProperties,
-  deleteProperty
+  deleteProperty,
+  getSingleProperty
 }

@@ -2,15 +2,17 @@ import { useEffect } from "react";
 import Card from "./Card";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../../../redux/slices/authSlice";
+import { fetchProperties } from "../../../redux/slices/propertiesSlice";
 
 const AdminDashboard = () => {
   const dispatch = useDispatch();
   const {data: users} = useSelector((state) => state.auth);
-  const {data: properties} = useSelector((state) => state.properties)
+  const {data: properties} = useSelector((state) => state.properties);
 
   //getting all users length
   useEffect(() => {
     dispatch(fetchUsers());  
+    dispatch(fetchProperties());
   },[dispatch])
 
   return (

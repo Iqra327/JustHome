@@ -5,6 +5,7 @@ const contact = require('./routes/contactRoute');
 const user = require('./routes/userRoute');
 const property = require('./routes/propertyRoute');
 const amenity = require('./routes/amenityRoute');
+const favorites = require('./routes/favoriteRoute');
 const connectDb = require('./utils/database');
 const socketHandler = require('./utils/socket');
 const multerErrorHandler = require('./middlewares/errorHandler');
@@ -32,6 +33,7 @@ app.use('/api/v1', contact);
 app.use('/api/v1', user);
 app.use('/api/v1', property);
 app.use('/api/v1', amenity);
+app.use('/api/v1', favorites);
 
 //middlerware
 app.use(multerErrorHandler);

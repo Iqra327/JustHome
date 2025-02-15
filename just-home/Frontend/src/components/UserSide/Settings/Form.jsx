@@ -48,6 +48,8 @@ const Form = () => {
       console.log('hi i am try')
       console.log(token)
       const response = await removeUserProfile(user.id, token);
+      const updatedUser = response?.data?.user;
+      dispatch(loginUser({ user: updatedUser , token}));
       console.log(response);
     } catch (error) {
       console.log(error);

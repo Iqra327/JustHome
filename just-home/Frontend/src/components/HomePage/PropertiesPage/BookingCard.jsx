@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BookingCard = ({ className }) => {
+const BookingCard = ({ className, property}) => {
   const [checkInDate, setCheckInDate] = useState(null);
   const [checkOutDate, setCheckOutDate] = useState(null);
   const [guests, setGuests] = useState(1);
 
-  const nightlyRate = 5900;
+  const nightlyRate = property?.price;
   const unavailableDates = [
     new Date(2025, 0, 25), 
     new Date(2025, 1, 5), 
@@ -35,7 +35,7 @@ const BookingCard = ({ className }) => {
   return (
     <div className={`max-w-xl mx-auto p-8 border rounded-lg shadow-lg relative ${className}`}>
       <h3 className="text-lg font-bold">
-        <span className="line-through text-gray-400">7,000 PKR</span> {nightlyRate} PKR{" "}
+        {/* <span className="line-through text-gray-400">7,000 PKR</span> */} {nightlyRate} PKR{" "} 
         <span className="text-sm font-normal">per night</span>
       </h3>
 

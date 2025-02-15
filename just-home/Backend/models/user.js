@@ -33,7 +33,11 @@ const userSchema = new mongoose.Schema({
   avatarId: {
     type: String,
     required: false
-  }
+  },
+  favorites: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Property'
+  }]
 }, {timestamps: true});
 
 //create model
