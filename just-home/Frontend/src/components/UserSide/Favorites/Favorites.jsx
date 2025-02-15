@@ -1,6 +1,4 @@
-import React from 'react'
 import Card from './Card'
-import { properties } from '../../../constants'
 
 const Favorites = () => {
   return (
@@ -9,7 +7,7 @@ const Favorites = () => {
       View all of your favorites
     </h1>
     <div className="flex gap-7">
-      <Card />
+      <Card /> 
     </div>
   </div>
   )

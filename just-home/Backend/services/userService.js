@@ -134,7 +134,8 @@ const removeProfileService = async (id, userId) => {
 
     return {
       status: 200,
-      message: "Profile has been removed successfully"
+      message: "Profile has been removed successfully",
+      user
     }
 
   } catch (error) {

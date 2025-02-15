@@ -35,8 +35,8 @@ const removeProfile = async (req, res) => {
   try {
     const {id} = req.user;
     const {userId} = req.params;
-    const {status, message} = await removeProfileService(id, userId);
-    res.status(status).json({message});
+    const {status, message, user} = await removeProfileService(id, userId);
+    res.status(status).json({message, user});
   } catch (error) {
     res.status(500).json({message: "Something went wrong. Please try again later!"})
   }

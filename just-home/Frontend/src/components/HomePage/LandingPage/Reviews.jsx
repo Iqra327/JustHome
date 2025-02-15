@@ -32,7 +32,7 @@ const Reviews = () => {
   };
 
   return (
-    <div className='bg-[#f7911c] flex text-white mt-20 py-9'>
+    <div className='bg-sky-900 flex text-white mt-20 py-9'>
       <div className='container grid grid-cols-2 max-sm:grid-cols-1 max-sm:gap-y-3'>
         <div className='flex flex-col gap-4 w-full max-w-md px-3'>
           <h1 className='text-[40px] max-lg:text-3xl max-md:text-2xl'>

@@ -84,8 +84,28 @@ const deletePropertyService = async (id) => {
   }
 };
 
+//getSinglePropertyService
+const getSinglePropertyService = async (id) => {
+  try {
+    const property = await Property.findById(id).populate('amenities');
+    if(!property){
+      return {
+        status: 404,
+        message: "Property not found!"
+      }
+    }
+    return {
+      status: 200,
+      property
+    }
+  } catch (error) {
+    throw error
+  }
+}
+
 module.exports = {
   createPropertyService,
   getAllPropertiesService,
-  deletePropertyService
+  deletePropertyService,
+  getSinglePropertyService
 }

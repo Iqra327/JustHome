@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "../Modal";
-import {users} from "../../../constants"
+import { users } from "../../../constants";
 
 const ManageBookings = () => {
   const [selectedUser, setSelectedUser] = useState(null);
@@ -43,12 +43,11 @@ const ManageBookings = () => {
       </table>
 
       {/* Bookings detail model */}
-      {
-        selectedUser &&
-        <Modal 
-          className='h-full max-h-[700px] overflow-y-auto px-4 mt-24' 
+      {selectedUser && (
+        <Modal
+          className="h-full max-h-[700px] overflow-y-auto px-4 mt-24"
           onClose={() => setSelectedUser(null)}
-          title ={`${selectedUser.userName}'s Bookings`}
+          title={`${selectedUser.userName}'s Bookings`}
         >
           <div className="space-y-4">
             {selectedUser.bookings.map((booking) => (
@@ -76,17 +75,14 @@ const ManageBookings = () => {
                 <p>
                   <strong>Status:</strong> {booking.status}
                 </p>
-                <button
-                  className="text-red-500 hover:underline mt-2"
-                >
+                <button className="text-red-500 hover:underline mt-2">
                   Delete Booking
                 </button>
               </div>
             ))}
           </div>
-         
         </Modal>
-      }
+      )}
     </div>
   );
 };

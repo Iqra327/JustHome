@@ -3,20 +3,20 @@ import { getAllUsers } from "../../../api/userApi";
 
 export const fetchUsers = createAsyncThunk(
   'users/fetchUsers',
-  async(_, {rejectWithValues, getState}) => {
+  async(_, {rejectWithValue}) => {
     try {
-      const token = getState().auth.token;
-      const response = await getAllUsers(token);
+      const response = await getAllUsers();
+      console.log(response);
       return response.data?.users;
     } catch (error) {
-      return rejectWithValues(error.response?.data || "Something went wrong");
+      return rejectWithValue(error.response?.data || "Something went wrong");
     }
   }
 )
 
 const initialState = {
   user: JSON.parse(localStorage.getItem('user')) || null,
-  token: localStorage.getItem('token') || null,
+  token: sessionStorage.getItem('token') || null,
   status: 'idle',
   errors: null,
   data: []
@@ -30,14 +30,14 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       localStorage.removeItem('user');
-      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
     },
     loginUser: (state, action) => {
       const {user, token} = action.payload;
       state.user = user;
       state.token = token;
       localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('token', token);
+      sessionStorage.setItem('token', token);
     },
   },
   extraReducers: (builder) => {
@@ -46,11 +46,11 @@ const authSlice = createSlice({
       state.status = 'loading'
     })
     .addCase(fetchUsers.fulfilled, (state, action) => {
-      state.status = 'succeeded',
+      state.status = 'succeeded';
       state.data = action.payload
     })
     .addCase(fetchUsers.rejected, (state, action) => {
-      state.status = 'failed',
+      state.status = 'failed';
       state.errors = action.payload
     })
   }

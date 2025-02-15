@@ -33,3 +33,13 @@ export const deleteProperty = async (id) => {
     throw error
   }
 }
+
+//get single property api
+export const getSingleProperty = async (id) => {
+  try {
+    const response = await jsonData.get(`/api/v1/singleProperty/${id}`);
+    return response;
+  } catch (error) {
+    throw error
+  }
+}

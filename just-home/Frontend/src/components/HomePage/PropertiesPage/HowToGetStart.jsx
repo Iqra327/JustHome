@@ -9,7 +9,7 @@ const HowToGetStart = () => {
       <h1 className="text-4xl text-sky-900 text-center mt-20">
         How to Get Started
       </h1>
-      <div className="bg-[#f7911c] py-12 mt-7">
+      <div className="bg-gray-200 py-12 mt-7">
         <div className="grid grid-cols-2 place-items-center w-full max-w-7xl mx-auto">
           {getStartGuidance.map((content, index) => (
             <div
